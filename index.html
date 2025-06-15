@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Expert tips, guides, and configurations for HA Tunnel VPN and mobile data optimization">
+    <meta name="keywords" content="HA Tunnel, VPN, mobile data, .hat files, VPN configuration">
+    <title>HA Tunnel Pro | VPN & Mobile Data Expertise</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="href.css" /> <!-- External CSS file -->
+
+    <style>
+        :root {
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+            --text-light: #e0e0e0;
+            --text-lighter: #f5f5f5;
+            --accent-blue: #00f3ff;
+            --accent-green: #39ff14;
+            --accent-purple: #b967ff;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: rgba(30, 30, 30, 0.95);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--accent-blue);
+            font-size: 2rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            padding: 0.5rem;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--accent-blue);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-blue);
+            transition: var(--transition);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 5%;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-lighter);
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            border: 2px solid rgba(0, 243, 255, 0.3);
+            background: rgba(30, 30, 30, 0.7);
+            color: var(--text-light);
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-container input:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
+        }
+
+        .search-container button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--accent-blue);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            color: var(--dark-bg);
+            transition: var(--transition);
+        }
+
+        .search-container button:hover {
+            background: var(--accent-green);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 5%;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent-blue);
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            background: rgba(57, 255, 20, 0.1);
+            border: 1px solid rgba(57, 255, 20, 0.3);
+            color: var(--accent-green);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--accent-green);
+            color: var(--dark-bg);
+        }
+
+        /* Blog Grid */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .blog-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 243, 255, 0.2);
+        }
+
+        .card-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .blog-card:hover .card-img img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .category {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .category.tips {
+            background: rgba(0, 243, 255, 0.1);
+            color: var(--accent-blue);
+            border: 1px solid var(--accent-blue);
+        }
+
+        .category.config {
+            background: rgba(185, 103, 255, 0.1);
+            color: var(--accent-purple);
+            border: 1px solid var(--accent-purple);
+        }
+
+        .category.freenet {
+            background: rgba(57, 255, 20, 0.1);
+            color: var(--accent-green);
+            border: 1px solid var(--accent-green);
+        }
+
+        .card-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-lighter);
+        }
+
+        .card-content p {
+            margin-bottom: 1.2rem;
+            color: var(--text-light);
+        }
+
+        .meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .author {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .author img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            padding: 3rem 5% 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent-blue);
+        }
+
+        .footer-column p {
+            margin-bottom: 1rem;
+            color: #aaa;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--accent-blue);
+            transform: translateX(5px);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background: var(--accent-blue);
+            color: var(--dark-bg);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #222;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--card-bg);
+                flex-direction: column;
+                padding: 1rem 0;
+                text-align: center;
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .blog-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero {
+                height: 60vh;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .filters {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>Chaosconfigs</h1>
+            </div>
+            <nav>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul id="navMenu">
+                    <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-blog"></i> Blog</a></li>
+                    <li><a href="#"><i class="fas fa-tags"></i> Categories</a></li>
+                    <li><a href="#"><i class="fas fa-file-download"></i> Configs</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Master free VPN tricks & Mobile Data</h2>
+            <p>Expert guides, configurations, and tips to optimize your VPN experience and unlock mobile data potential</p>
+            <div class="search-container">
+                <input type="text" placeholder="Search for tutorials, configs, and tips...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <h2 class="section-title">Latest Posts</h2>
+        
+        <!-- Filters -->
+        <div class="filters">
+            <button class="filter-btn active">All Topics</button>
+            <button class="filter-btn">HA Tunnel Tips</button>
+            <button class="filter-btn">Configurations</button>
+            <button class="filter-btn">Free Net</button>
+            <button class="filter-btn">Mobile Data</button>
+        </div>
+        
+        <!-- Blog Grid -->
+        <div class="blog-grid">
+            <!-- Post 1 -->
+            <a class="p2" href="inport.html">
+            <article class="blog-card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="Importing .hat Files">
+                </div>
+                <div class="card-content">
+                    <span class="category tips">HA Tunnel Tips</span>
+                    <h3>How to Import .hat Files in HA Tunnel VPN</h3>
+                    <p>Learn the step-by-step process to import .hat configuration files into HA Tunnel VPN for seamless connections and enhanced security.</p>
+                    <div class="meta">
+                        <span>May 15, 2025</span>
+                        <div class="author">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Author">
+                            <span>Alex Johnson</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            </a>
+            
+                 <!-- Post 1 -->
+            <a class="p2" href="inport.html">
+            <article class="blog-card">
+                <div class="card-img">
+                    <img src="x.png" alt="Importing .hat Files">
+                </div>
+                <div class="card-content">
+                    <span class="category tips">x Tunnel Tips</span>
+                    <h3>know how x tunnel works and download configarations</h3>
+                    <p>X Tunnel is a fast, simple VPN for bypassing restrictions. Get the best configs and working settings here.</p>
+                    <div class="meta">
+                        <span>May 15, 2025</span>
+                        <div class="author">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Author">
+                            <span>Alex Johnson</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            </a>
+            
+                 <!-- Post 1 -->
+            <a class="p2" href="inport.html">
+            <article class="blog-card">
+                <div class="card-img">
+                    <img src="ha.png" alt="Importing .hat Files">
+                </div>
+                <div class="card-content">
+                    <span class="category tips">HA Tunnel Tips</span>
+                    <h3>download .hat Files for HA Tunnel VPN</h3>
+                    <p>HA Tunnel Plus lets you use free net tricks with custom SNI, SSH, or V2Ray. This post has working configs and easy setup tips.</p>
+                    <div class="meta">
+                        <span>May 15, 2025</span>
+                        <div class="author">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Author">
+                            <span>Alex Johnson</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            </a>
+            
+            <!-- Post 2 -->
+            <a class="p2" href="vpn.html">
+            <article class="blog-card">
+                <div class="card-img">
+                    <img src="images (8).jpeg" alt="Finding Working Servers">
+                </div>
+                <div class="card-content">
+                    <span class="category freenet">Free Net</span>
+                    <h3>Finding Reliable Free VPN Servers in 2025</h3>
+                    <p>Discover the best sources and methods to find working, free VPN servers that provide stable connections without compromising speed.</p>
+                    <div class="meta">
+                        <span>April 28, 2025</span>
+                        <div class="author">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Author">
+                            <span>Sarah Williams</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            </a>
+            <!-- Post 3 -->
+             <a class="p2" href="vpn.html">
+            <article class="blog-card">
+                <div class="card-img">
+                       <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="Troubleshooting VPN">                   
+                </div>
+                <div class="card-content">
+                    <span class="category config">Configurations</span>
+                    <h3>Optimizing Mobile Data Usage with VPN</h3>
+                    <p>Advanced techniques to maximize your mobile data efficiency while using VPN connections - save data without sacrificing security.</p>
+                    <div class="meta">
+                        <span>April 10, 2025</span>
+                        <div class="author">
+                            <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Author">
+                            <span>Michael Chen</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+             </a>
+            <!-- Post 4 -->
+                  <a class="p2" href="opt1.html">
+            <article class="blog-card">
+                <div class="card-img">
+                      <img src="https://images.unsplash.com/photo-1586769852836-bc069f19e1b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="chaos config search">              
+                </div>
+                <div class="card-content">
+                    <span class="category tips">HA Tunnel Tips</span>
+                    <h3>Chaos Configurations search</h3>
+                    <p>use our fast search page to find popular vpn configurations.</p>
+                    <div class="meta">
+                        <span>March 29, 2025</span>
+                        <div class="author">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Author">
+                            <span>Emma Rodriguez</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+             </a>
+            
+                     <!-- Post 1 -->
+            <a class="p2" href="inport.html">
+            <article class="blog-card">
+                <div class="card-img">
+                    <img src="np.png" alt="Importing .hat Files">
+                </div>
+                <div class="card-content">
+                    <span class="category tips"> NPVT Tunnel  Tips</span>
+                    <h3>learn how NPVT Tunnel VPN works </h3>
+                    <p>NPVT Tunnel uses SSL and HTTP for secure browsing and free data tricks. Download configs and see how to set it up.</p>
+                     <div class="meta">
+                        <span>May 15, 2025</span>
+                        <div class="author">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Author">
+                            <span>Alex Johnson</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            </a>
+            
+            <!-- Post 5 -->
+ <a class="p2" href="vpn.html">
+            <article class="blog-card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="Custom Configurations">
+                </div>
+                <div class="card-content">
+                    <span class="category config">vpn tips</span>
+                    <h3>How to Use A VPN to Save Data and Bypass Restrictions</h3>
+                    <p>learn how to save up to 30% of your data and bypass ISP restrictions. In this guide</p>
+                         <div class="meta">
+                        <span>March 15, 2025</span>
+                        <div class="author">
+                            <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="Author">
+                            <span>David Kim</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+     
+ </a>
+            
+                     <!-- Post 1 -->
+            <a class="p2" href="inport.html">
+            <article class="blog-card">
+                <div class="card-img">
+                    <img src="jz.png" alt="Importing .hat Files">
+                </div>
+                <div class="card-content">
+                    <span class="category tips">Jz pro vpn Tips</span>
+                    <h3>learn how Jz pro vpn works to get you freenet</h3>
+                    <p>Jz Pro VPN supports SSL, HTTP, and TCP for fast, stable access. Grab working configs and learn how to use it.</p>
+                     <div class="meta">
+                        <span>May 15, 2025</span>
+                        <div class="author">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Author">
+                            <span>Alex Johnson</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            </a>
+            
+                     <!-- Post 1 -->
+            <a class="p2" href="inport.html">
+            <article class="blog-card">
+                <div class="card-img">
+                    <img src="nn.png" alt="Importing .hat Files">
+                </div>
+                <div class="card-content">
+                    <span class="category tips">Http custom Tips</span>
+                    <h3>learn how http custom works</h3>
+                    <p>HTTP Custom is a powerful VPN tool with full control over headers. Find working .hc files and setup steps here</p>
+                      <div class="meta">
+                        <span>May 15, 2025</span>
+                        <div class="author">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Author">
+                            <span>Alex Johnson</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            </a>
+            
+            <!-- Post 6 -->
+          <a class="p2" href="vpn.html">
+            <article class="blog-card">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="Data Saving Techniques">
+                </div>
+                <div class="card-content">
+                    <span class="category freenet">Free Net</span>
+                    <h3>Finding and Testing Working VPN Servers</h3>
+                    <p>Finding reliable VPN servers for HA Tunnel can be challenging, especially when many free servers get overloaded or blocked</p> 
+                    <div class="meta">
+                        <span>February 28, 2025</span>
+                        <div class="author">
+                            <img src="https://randomuser.me/api/portraits/women/26.jpg" alt="Author">
+                            <span>Lisa Thompson</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+          </a>
+            
+                     <!-- Post 1 -->
+            <a class="p2" href="inport.html">
+            <article class="blog-card">
+                <div class="card-img">
+                    <img src="ar.png" alt="Importing .hat Files">
+                </div>
+                <div class="card-content">
+                    <span class="category tips">Ar Tunnel Tips</span>
+                    <h3>download the latest Ar tunnel app including the configs</h3>
+                    <p>AR Tunnel creates custom HTTP/SSH connections for free browsing. This post has configs and quick setup guides.</p>
+                     <div class="meta">
+                        <span>May 15, 2025</span>
+                        <div class="author">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Author">
+                            <span>Alex Johnson</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            </a>
+            
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>About chaosconfigs</h3>
+                <p>Your trusted source for  VPN expertise, mobile data optimization, and network configuration guides since 2023.</p>
+                <p>We provide beginner-friendly tutorials and advanced techniques to help you navigate the world of VPNs and mobile data.</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Blog</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Configurations</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Free Net Resources</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Configarations</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> HA Tunnel files</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> X Tunnel files</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Ar Tunnel files</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> NPVT Tunnel files</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Jz pro vpn files</a></li>                  
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> HTTP custom files</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Connect With Us</h3>
+                <p>Subscribe to our newsletter for the latest guides and updates:</p>
+                <div class="search-container" style="margin: 1rem 0;">
+                    <input type="email" placeholder="Your email address">
+                    <button><i class="fas fa-paper-plane"></i></button>
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 chaosconfigarations. All rights reserved. | Designed with <i class="fas fa-heart" style="color: var(--accent-blue);"></i> for VPN enthusiasts</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.getElementById('navMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('show');
+        });
+        
+        // Filter Buttons
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // In a real implementation, this would filter blog posts
+                console.log(`Filtering by: ${button.textContent}`);
+            });
+        });
+        
+        // Search Functionality
+        const searchInput = document.querySelector('.search-container input');
+        const searchButton = document.querySelector('.search-container button');
+        
+        searchButton.addEventListener('click', () => {
+            if (searchInput.value.trim() !== '') {
+                alert(`Searching for: ${searchInput.value}`);
+                // In a real implementation, this would search content
+            }
+        });
+        
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchButton.click();
+            }
+        });
+        
+        // Blog Card Hover Effects
+        const blogCards = document.querySelectorAll('.blog-card');
+        
+        blogCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
