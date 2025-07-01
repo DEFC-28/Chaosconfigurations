@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a WhatsApp Bot Using Knightbot-MD | chaosconfigs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+            --text-light: #e0e0e0;
+            --text-lighter: #f5f5f5;
+            --accent-blue: #00f3ff;
+            --accent-green: #39ff14;
+            --accent-purple: #b967ff;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background-attachment: fixed;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: rgba(30, 30, 30, 0.95);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--accent-blue);
+            font-size: 2rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            padding: 0.5rem;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--accent-blue);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-blue);
+            transition: var(--transition);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Post Hero Section */
+        .post-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('wha.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 60vh;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 5% 5rem;
+        }
+
+        .post-hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .post-category {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            background: rgba(185, 103, 255, 0.1);
+            color: var(--accent-purple);
+            border: 1px solid var(--accent-purple);
+        }
+
+        .post-hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-lighter);
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .author {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .author img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-blue);
+        }
+
+        .author-info h3 {
+            font-size: 1.1rem;
+            color: var(--text-lighter);
+        }
+
+        .author-info span {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .post-date {
+            color: #aaa;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 3rem;
+        }
+
+        .post-content {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 3rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .post-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent-blue), var(--accent-purple));
+        }
+
+        .post-intro {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #333;
+            color: var(--text-lighter);
+            line-height: 1.8;
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .post-intro::after {
+            content: '🤖';
+            position: absolute;
+            right: 0;
+            bottom: 1rem;
+            font-size: 2rem;
+            opacity: 0.2;
+        }
+
+        .post-section h2 {
+            font-size: 1.8rem;
+            margin: 2.5rem 0 1.5rem;
+            color: var(--accent-purple);
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .post-section h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 6px;
+            height: 1.8rem;
+            background: var(--accent-purple);
+            border-radius: 3px;
+        }
+
+        .post-section p {
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .tip-box {
+            background: rgba(185, 103, 255, 0.1);
+            border-left: 4px solid var(--accent-purple);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .warning-box {
+            background: rgba(255, 165, 0, 0.1);
+            border-left: 4px solid var(--accent-purple);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .box-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .config-block {
+            background: rgba(30, 30, 30, 0.7);
+            border: 1px solid #333;
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: monospace;
+            color: var(--accent-green);
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .config-block pre {
+            white-space: pre-wrap;
+            margin: 0;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(57, 255, 20, 0.1);
+            color: var(--accent-green);
+            border: 1px solid var(--accent-green);
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-green);
+            color: var(--dark-bg);
+        }
+
+        .testimonial {
+            background: rgba(0, 243, 255, 0.1);
+            border-left: 4px solid var(--accent-blue);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 5px 5px 0;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            display: block;
+            text-align: right;
+            margin-top: 0.5rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: rgba(30, 30, 30, 0.7);
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+            box-shadow: 0 5px 15px rgba(185, 103, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin: 2rem 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-lighter);
+            position: relative;
+            display: inline-block;
+        }
+
+        .sidebar-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent-blue);
+        }
+
+        .sidebar-links a {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 0;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid #333;
+        }
+
+        .sidebar-links a:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-links a:hover {
+            color: var(--accent-blue);
+            padding-left: 0.5rem;
+        }
+
+        .sidebar-links a i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .download-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: rgba(57, 255, 20, 0.1);
+            color: var(--accent-green);
+            padding: 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 1px solid rgba(57, 255, 20, 0.3);
+            margin-top: 1rem;
+        }
+
+        .download-btn:hover {
+            background: var(--accent-green);
+            color: var(--dark-bg);
+        }
+
+        .checklist {
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .checklist li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .checklist li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+            font-weight: bold;
+        }
+
+        /* Related Posts */
+        .related-posts {
+            grid-column: 1 / -1;
+            margin-top: 3rem;
+        }
+
+        .related-posts h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+            color: var(--text-lighter);
+        }
+
+        .related-posts h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent-blue);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .blog-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 243, 255, 0.2);
+        }
+
+        .card-img {
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .blog-card:hover .card-img img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .category {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .category.tips {
+            background: rgba(0, 243, 255, 0.1);
+            color: var(--accent-blue);
+            border: 1px solid var(--accent-blue);
+        }
+
+        .category.config {
+            background: rgba(185, 103, 255, 0.1);
+            color: var(--accent-purple);
+            border: 1px solid var(--accent-purple);
+        }
+
+        .category.freenet {
+            background: rgba(57, 255, 20, 0.1);
+            color: var(--accent-green);
+            border: 1px solid var(--accent-green);
+        }
+
+        .card-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-lighter);
+        }
+
+        .card-content p {
+            margin-bottom: 1.2rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #aaa;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            padding: 3rem 5% 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+            color: var(--text-lighter);
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent-blue);
+        }
+
+        .footer-column p {
+            margin-bottom: 1rem;
+            color: #aaa;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--accent-blue);
+            transform: translateX(5px);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background: var(--accent-blue);
+            color: var(--dark-bg);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #222;
+            color: #777;
+            font-size: 0.9rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--card-bg);
+                flex-direction: column;
+                padding: 1rem 0;
+                text-align: center;
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .post-hero-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .post-hero {
+                min-height: 50vh;
+                padding-bottom: 3rem;
+            }
+            
+            .post-hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .post-content {
+                padding: 1.5rem;
+            }
+            
+            .post-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>chaosconfigs</h1>
+            </div>
+            <nav>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul id="navMenu">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-blog"></i> Blog</a></li>
+                    <li><a href="#"><i class="fas fa-tags"></i> Categories</a></li>
+                    <li><a href="#"><i class="fas fa-file-download"></i> Configs</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Post Hero Section -->
+    <section class="post-hero">
+        <div class="post-hero-content">
+            <span class="post-category">Bot Tutorial</span>
+            <h1>Create a WhatsApp Bot Using Knightbot-MD</h1>
+            <div class="post-meta">
+                <div class="author">
+                    <img src="th.jpg" alt="Author">
+                    <div class="author-info">
+                        <h3>THUGKEED</h3>
+                        <span>Automation Specialist</span>
+                    </div>
+                </div>
+                <div class="post-date">
+                    <i class="far fa-calendar"></i>
+                    <span>June 28, 2025</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <article class="post-content">
+            <p class="post-intro">This is the first tutorial in a special 3-part series on WhatsApp bots here on Chaos Configurations. If you've ever wanted to make your own bot — one that replies to chats, runs commands, or helps you manage groups — this is where you begin. In this episode, we'll guide you through setting up Knightbot-MD, a powerful, open-source WhatsApp bot that works with Termux or a cloud IDE and can be fully customized.</p>
+            
+            <div class="post-section">
+                <h2>🔗 Knightbot-MD GitHub Source</h2>
+                <p>Everything you need is on GitHub — the files, the code, and setup details. The Knightbot-MD repository contains all the necessary components to get your bot up and running quickly.</p>
+                
+                <div class="tip-box">
+                    <div class="box-title">
+                        <i class="fab fa-github"></i>
+                        <span>GitHub Repository</span>
+                    </div>
+                    <p>GitHub might look intimidating at first, but don't worry — you don't need to understand everything. Just find the "Code" button, copy the link, and you'll be able to clone the entire bot folder straight into your Termux or IDE.</p>
+                    <a href="https://github.com/mruniquehacker/Knightbot-MD?tab=readme-ov-file" target="_blank" class="download-btn" style="margin-top: 1rem;">
+                        <i class="fab fa-github"></i> Visit Knightbot-MD GitHub
+                    </a>
+                </div>
+                
+                <p>The repository includes detailed documentation, setup guides, and examples to help you configure your bot exactly how you want it. Even if you're new to coding, the instructions are beginner-friendly.</p>
+            </div>
+            
+            <div class="post-section">
+                <h2>▶️ YouTube Video Tutorial</h2>
+                <p>Here's a full video that walks you through the setup step-by-step. It's short, simple, and beginner-friendly, covering everything you need to know to get your bot running smoothly.</p>
+                
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/-oz_u1iMgf8?si=5I8JmL8LyDWULu4a" frameborder="0" allowfullscreen></iframe>
+                </div>
+                
+                <p>Whether you're a total beginner or already know a bit of Termux, this video covers everything you need — including common mistakes and how to fix them. Follow along to avoid pitfalls and get your bot working on the first try.</p>
+            </div>
+            
+            <div class="post-section">
+                <h2>⚠️ IMPORTANT: Settings Fix for Common Errors</h2>
+                <p>If you encounter any errors during setup — like failed installation, missing files, or broken settings — use this fixed settings.js code below. This will help you recover quickly and get your bot running.</p>
+                
+                <div class="config-block">
+                    <button class="copy-btn" onclick="copyCode()">Copy Code</button>
+                    <pre>const settings = {
+  packname: 'YOUR_BOT_NAME_HERE',
+  author: 'YOUR_NAME_HERE',
+  botName: "YOUR_BOT_NAME_HERE",
+  botOwner: 'YOUR_BRAND_OR_HANDLE',
+  ownerNumber: "YOUR_NUMBER_HERE", // Use international format without + or spaces
+  giphyApiKey: 'qnl7ssQChTdPjsKta2Ax2LMaGXz303tq',
+  commandMode: "public",
+  description: "This is a bot for managing group commands and automating tasks.",
+  version: "2.0.6",
+};
+
+module.exports = settings;</pre>
+                </div>
+                
+                <p>Update this with your bot's name and number, then save it as settings.js inside your project folder. This will fix most configuration errors caused by typos or missing fields. Remember to restart your bot after making these changes.</p>
+            </div>
+            
+            <div class="post-section">
+                <h2>⚙️ What You'll Need</h2>
+                <p>Here's your checklist before you start. Having these prepared will make the setup process much smoother and help avoid common issues:</p>
+                
+                <ul class="checklist">
+                    <li>A spare WhatsApp number (for bot use)</li>
+                    <li>Termux app or online IDE (e.g. Replit)</li>
+                    <li>Node.js installed (version 16 or higher)</li>
+                    <li>Good internet connection (to download dependencies)</li>
+                    <li>Patience and a powerbank (optional, but helpful)</li>
+                </ul>
+                
+                <p>This setup isn't heavy, but a strong internet connection helps avoid errors during install. If you're using Termux on mobile, make sure your device has enough storage space and battery life.</p>
+            </div>
+            
+            <div class="post-section">
+                <h2>🤖 Cool Features You'll Unlock</h2>
+                <p>Knightbot-MD isn't just another basic bot — it's packed with powerful features that can transform how you use WhatsApp. Here's what you'll be able to do:</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3>Smart Replies</h3>
+                        <p>Respond to commands in private or groups</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3>Auto-Responder</h3>
+                        <p>Set up automatic replies to messages</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Group Management</h3>
+                        <p>Moderate WhatsApp groups efficiently</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3>Custom Modules</h3>
+                        <p>Add your own features and commands</p>
+                    </div>
+                </div>
+                
+                <p>And since it's open-source — meaning you can edit, remove, or add features anytime! The possibilities are limited only by your imagination and coding skills. The community regularly adds new modules and improvements.</p>
+            </div>
+            
+            <div class="post-section">
+                <h2>🎯 Wrapping Up</h2>
+                <p>This tutorial was just your first step into the world of WhatsApp automation. With Knightbot-MD now set up, you have a powerful tool at your disposal that can save you hours of repetitive tasks and make your WhatsApp experience more efficient.</p>
+                
+                <div class="tip-box">
+                    <div class="box-title">
+                        <i class="fas fa-robot"></i>
+                        <span>What's Next?</span>
+                    </div>
+                    <p>In the next two parts of this series, we'll explore even more powerful capabilities: How to build a reply-only WhatsApp bot for customer service scenarios, and how to create an AI-powered chatbot using free APIs that can understand natural language and hold conversations.</p>
+                </div>
+                
+                <p>Stick with Chaos Configurations — the real fun is just beginning. We'll be diving deeper into customization, advanced features, and troubleshooting tips to make your bot truly unique.</p>
+            </div>
+        </article>
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-card">
+                <h3>Bot Resources</h3>
+                <div class="sidebar-links">
+                    <a href="#"><i class="fab fa-github"></i> Knightbot-MD GitHub</a>
+                    <a href="#"><i class="fab fa-youtube"></i> Tutorial Playlist</a>
+                    <a href="#"><i class="fas fa-file-code"></i> Sample Configs</a>
+                    <a href="#"><i class="fab fa-discord"></i> Support Community</a>
+                    <a href="#"><i class="fas fa-book"></i> Documentation</a>
+                </div>
+            </div>
+            
+            <div class="sidebar-card">
+                <h3>Bot Setup Checklist</h3>
+                <div class="sidebar-links">
+                    <a href="#"><i class="fas fa-mobile-alt"></i> Spare Phone/Number</a>
+                    <a href="#"><i class="fab fa-android"></i> Termux App</a>
+                    <a href="#"><i class="fab fa-node-js"></i> Node.js v16+</a>
+                    <a href="#"><i class="fas fa-wifi"></i> Stable Internet</a>
+                    <a href="#"><i class="fas fa-hourglass-half"></i> 30 Minutes Time</a>
+                </div>
+            </div>
+            
+            <div class="sidebar-card">
+                <h3>About the Author</h3>
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                    <img src="th.jpg" alt="Author" style="width: 80px; height: 80px; border-radius: 50%;">
+                    <div>
+                        <h4 style="color: var(--text-lighter); margin-bottom: 0.3rem;">THUGKEED</h4>
+                        <p style="font-size: 0.9rem; color: #aaa;">Automation specialist with 2+ years experience building WhatsApp solutions.</p>
+                    </div>
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Related Posts -->
+        <section class="related-posts">
+            <h2>Upcoming Tutorials</h2>
+            <div class="blog-grid">
+                <!-- Post 1 -->
+                <article class="blog-card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="Reply Bot">
+                    </div>
+                    <div class="card-content">
+                        <span class="category config">Part 2</span>
+                        <h3>Build a Reply-Only WhatsApp Bot</h3>
+                        <p>Create a bot that automatically responds to messages with custom replies.</p>
+                        <div class="meta">
+                            <span>Coming Soon</span>
+                            <div class="author">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Author">
+                                <span>Bot Expert</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- Post 2 -->
+                <article class="blog-card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="AI Bot">
+                    </div>
+                    <div class="card-content">
+                        <span class="category config">Part 3</span>
+                        <h3>Create an AI-Powered Chatbot</h3>
+                        <p>Integrate AI capabilities into your WhatsApp bot using free APIs.</p>
+                        <div class="meta">
+                            <span>Coming Soon</span>
+                            <div class="author">
+                                <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Author">
+                                <span>AI Specialist</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- Post 3 -->
+                <article class="blog-card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="Bot Hosting">
+                    </div>
+                    <div class="card-content">
+                        <span class="category tips">Bonus</span>
+                        <h3>24/7 Hosting for WhatsApp Bots</h3>
+                        <p>Keep your bot running continuously using free cloud hosting.</p>
+                        <div class="meta">
+                            <span>Coming Soon</span>
+                            <div class="author">
+                                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Author">
+                                <span>DevOps Expert</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>About Chaosconfigs</h3>
+                <p>Your trusted source for tech tutorials, automation guides, and digital solutions since 2023.</p>
+                <p>We provide beginner-friendly tutorials and advanced techniques to help you navigate the world of technology and automation.</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Blog</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Tutorials</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Resources</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Tutorial Categories</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> WhatsApp Bots</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> VPN Configs</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Automation</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Free Net</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Coding</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Connect With Us</h3>
+                <p>Join our community for the latest tutorials and updates:</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 chaosconfigartions. All rights reserved. | Designed for tech enthusiasts</p>
+        </div>
+    </footer>
+
+
+<script src="https://fpyf8.com/88/tag.min.js" data-zone="153353" async data-cfasync="false"></script>
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.getElementById('navMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('show');
+        });
+        
+        // Blog Card Hover Effects
+        const blogCards = document.querySelectorAll('.blog-card');
+        
+        blogCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-5px)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+        
+        // Copy code function
+        function copyCode() {
+            const code = `const settings = {
+  packname: 'YOUR_BOT_NAME_HERE',
+  author: 'YOUR_NAME_HERE',
+  botName: "YOUR_BOT_NAME_HERE",
+  botOwner: 'YOUR_BRAND_OR_HANDLE',
+  ownerNumber: "YOUR_NUMBER_HERE", // Use international format without + or spaces
+  giphyApiKey: 'qnl7ssQChTdPjsKta2Ax2LMaGXz303tq',
+  commandMode: "public",
+  description: "This is a bot for managing group commands and automating tasks.",
+  version: "2.0.6",
+};
+
+module.exports = settings;`;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.textContent = 'Copied!';
+                setTimeout(() => {
+                    btn.textContent = 'Copy Code';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
