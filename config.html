@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Download working VPN configurations for multiple VPN clients including HTTP Custom, HA Tunnel, X Tunnel and more">
+    <meta name="keywords" content="VPN configs, HTTP Custom, HA Tunnel, X Tunnel, Jz Pro, AR Tunnel, free VPN">
+    <title>ConfigHub - Universal VPN Configuration Downloader | Get Working Configs</title>
+          <link rel="stylesheet" href="href.css" /> <!-- External CSS file -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --dark-bg: #0d1117;
+            --card-bg: #161b22;
+            --text-light: #e6edf3;
+            --text-lighter: #f0f6fc;
+            --accent-blue: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-purple: #b87fff;
+            --accent-orange: #ff9b33;
+            --border-color: #30363d;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.7;
+            scroll-behavior: smooth;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: rgba(22, 27, 34, 0.95);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--accent-blue);
+            font-size: 2rem;
+            transition: transform 0.5s ease;
+        }
+
+        .logo:hover i {
+            transform: rotate(360deg);
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            padding: 0.5rem;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--accent-blue);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-blue);
+            transition: var(--transition);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Breadcrumbs */
+        .breadcrumbs {
+            max-width: 1400px;
+            margin: 1.5rem auto;
+            padding: 0 5%;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumbs a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumbs span {
+            color: #8b949e;
+            margin: 0 8px;
+        }
+
+        /* Post Hero */
+        .post-hero {
+            max-width: 1400px;
+            margin: 0 auto 3rem;
+            padding: 0 5%;
+            text-align: center;
+        }
+
+        .post-hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        /* Search Container */
+        .search-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 5%;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg);
+            border-radius: 30px;
+            padding: 0 15px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            height: 55px;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box:focus-within {
+            box-shadow: 0 4px 20px rgba(88, 166, 255, 0.2);
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
+        .filter-dropdown {
+            position: relative;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding-right: 15px;
+            margin-right: 10px;
+            border-right: 1px solid var(--border-color);
+            height: 100%;
+        }
+
+        .filter-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            font-weight: 500;
+            color: var(--text-light);
+            padding: 0;
+            height: 100%;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 0;
+            background-color: var(--card-bg);
+            min-width: 200px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            padding: 10px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .filter-dropdown.active .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-content div {
+            padding: 12px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+            color: var(--text-light);
+        }
+
+        .dropdown-content div:hover {
+            background-color: rgba(88, 166, 255, 0.1);
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 0 10px;
+            font-size: 16px;
+            outline: none;
+            color: var(--text-light);
+            height: 100%;
+            line-height: 55px;
+        }
+
+        .search-input::placeholder {
+            color: #8b949e;
+        }
+
+        .search-btn {
+            background: var(--accent-blue);
+            color: var(--dark-bg);
+            border: none;
+            border-radius: 30px;
+            padding: 0.6rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-btn:hover {
+            background: #388bfd;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(88, 166, 255, 0.3);
+        }
+
+        /* Config List */
+        .config-list {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            animation: fadeIn 0.8s ease;
+        }
+
+        .config-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .config-item:last-child {
+            border-bottom: none;
+        }
+
+        .config-item:hover {
+            background-color: rgba(88, 166, 255, 0.05);
+            transform: translateX(5px);
+        }
+
+        .config-text h3 {
+            margin: 0 0 4px 0;
+            color: var(--text-lighter);
+            font-size: 1.05rem;
+        }
+
+        .config-text p {
+            margin: 0;
+            color: #8b949e;
+            font-size: 0.9rem;
+        }
+
+        .download-btn {
+            background: rgba(88, 166, 255, 0.1);
+            border: none;
+            border-radius: 8px;
+            padding: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .download-btn:hover {
+            background: var(--accent-blue);
+            transform: scale(1.1);
+        }
+
+        .download-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--accent-blue);
+            transition: var(--transition);
+        }
+
+        .download-btn:hover svg {
+            fill: var(--dark-bg);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #8b949e;
+            display: none;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            animation: fadeIn 0.8s ease;
+        }
+
+        .no-results i {
+            font-size: 2rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        /* Related Posts */
+        .related-posts {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 5%;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent-blue);
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .related-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .related-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(88, 166, 255, 0.2);
+        }
+
+        .related-img {
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .related-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .related-card:hover .related-img img {
+            transform: scale(1.05);
+        }
+
+        .related-content {
+            padding: 1.5rem;
+        }
+
+        .related-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-lighter);
+        }
+
+        .related-meta {
+            font-size: 0.9rem;
+            color: #8b949e;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Footer */
+        footer {
+            background: #090c10;
+            padding: 4rem 5% 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent-blue);
+        }
+
+        .footer-column p {
+            margin-bottom: 1rem;
+            color: #8b949e;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #8b949e;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--accent-blue);
+            transform: translateX(5px);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background: var(--accent-blue);
+            color: var(--dark-bg);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: #8b949e;
+            font-size: 0.9rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .post-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--card-bg);
+                flex-direction: column;
+                padding: 1rem 0;
+                text-align: center;
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .post-content {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .post-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .search-box {
+                flex-direction: column;
+                height: auto;
+                padding: 15px;
+                border-radius: 12px;
+            }
+            
+            .filter-dropdown {
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding-right: 0;
+                padding-bottom: 15px;
+                margin-right: 0;
+                margin-bottom: 15px;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .search-input {
+                width: 100%;
+                margin-bottom: 15px;
+                line-height: normal;
+                padding: 10px;
+            }
+            
+            .search-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .related-card {
+                animation: none;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Monetag Banner */
+        .monetag-banner {
+            margin: 2rem 0;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>ConfigHub</h1>
+            </div>
+            <nav>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul id="navMenu">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="index.html#blog"><i class="fas fa-blog"></i> Blog</a></li>
+                    <li><a href="index.html"><i class="fas fa-tags"></i> Categories</a></li>
+                    <li><a href="search.html"><i class="fas fa-file-download"></i> Configs</a></li>
+                    <li><a href="index.html#ab"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="index.html#em"><i class="fas fa-envelope"></i> Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <a href="#">Home</a>
+        <span>/</span>
+        <a href="#">Downloads</a>
+        <span>/</span>
+        <span>VPN Configurations</span>
+    </div>
+
+    <!-- Post Hero -->
+    <section class="post-hero">
+        <h1>Universal VPN Configuration Downloader</h1>
+    </section>
+
+    <!-- Search and Download Section -->
+    <main class="search-container">
+        <!-- Native Banner Ad from Monetag -->
+        <div class="monetag-banner">
+            <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9400957,document.createElement('script'))</script>
+        </div>
+        
+        <div class="search-box">
+            <div class="filter-dropdown">
+                <div class="filter-btn">
+                    <i class="fas fa-filter filter-icon"></i>
+                    <span>All Formats</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <div class="dropdown-content">
+                    <div data-filter="all"><i class="fas fa-file-alt"></i> All Formats</div>
+                    <div data-filter=".hc"><i class="fas fa-file-code"></i> HTTP Custom</div>
+                    <div data-filter=".ha"><i class="fas fa-tunnel"></i> HA Tunnel</div>
+                    <div data-filter=".xt"><i class="fas fa-tunnel"></i> X Tunnel</div>
+                    <div data-filter=".ar"><i class="fas fa-tunnel"></i> AR Tunnel</div>
+                </div>
+            </div>
+            
+            <input type="text" class="search-input" placeholder="Search configurations..." id="searchInput">
+            
+            <button class="search-btn" id="searchBtn">
+                <i class="fas fa-search"></i>
+                <span>Search</span>
+            </button>
+        </div>
+        
+        <div class="no-results" id="noResults">
+            <i class="fas fa-search"></i>
+            <h3>No configurations found</h3>
+            <p>Try adjusting your search or filters</p>
+        </div>
+
+        <section class="config-list" id="configList">
+            
+            
+            <div class="config-item">
+                <div class="config-text">
+                    <h3>𝗩𝗢𝗗𝗔𝗖𝗢𝗠🩵𝗨𝗡𝗟𝗜𝗠𝗜𝗧𝗘𝗗🥤PLUG 𝗪𝗘𝗟𝗖𝗢𝗠𝗘 𝗥𝗦𝗔</h3>
+                    <p>Ha Tunnel • Updated: 12 Aug 2025</p>
+                </div>
+                <a href="𝗩𝗢𝗗𝗔𝗖𝗢𝗠🩵𝗨𝗡𝗟𝗜𝗠𝗜𝗧𝗘𝗗🥤PLUG 𝗪𝗘𝗟𝗖𝗢𝗠𝗘 𝗥𝗦𝗔.hat" download class="download-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M5 20h14v-2H5v2zm7-18l-5.5 5.5h4v6h3v-6h4L12 2z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="config-item">
+                <div class="config-text">
+                    <h3>𝗩𝗢𝗗𝗔𝗖𝗢𝗠💛𝗨𝗡𝗟𝗜𝗠𝗜𝗧𝗘𝗗🥤༆𝗪𝗘𝗟𝗖𝗢𝗠𝗘 𝗥𝗦𝗔 </h3>
+                    <p>TLS Tunnel • Updated: 12 Aug 2025</p>
+                </div>
+                <a href="𝗩𝗢𝗗𝗔𝗖𝗢𝗠💛𝗨𝗡𝗟𝗜𝗠𝗜𝗧𝗘𝗗🥤༆𝗪𝗘𝗟𝗖𝗢𝗠𝗘 𝗥𝗦𝗔 👩‍🚒.tls" download class="download-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M5 20h14v-2H5v2zm7-18l-5.5 5.5h4v6h3v-6h4L12 2z"/>
+                    </svg>
+                </a>
+            </div>
+
+
+            <div class="config-item">
+                <div class="config-text">
+                    <h3>VODACOM UNLIMITED 🥺 WELCOME RSA</h3>
+                    <p>Http coustom • Updated: 12 Aug 2025</p>
+                </div>
+                <a href="VODACOM UNLIMITED 🥺 WELCOME RSA.hc" download class="download-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M5 20h14v-2H5v2zm7-18l-5.5 5.5h4v6h3v-6h4L12 2z"/>
+                    </svg>
+                </a>
+            </div>
+
+
+            <div class="config-item">
+                <div class="config-text">
+                    <h3>𝗩𝗢𝗗𝗔𝗖𝗢𝗠🤍𝗨𝗡𝗟𝗜𝗠𝗜𝗧𝗘𝗗🥤</h3>
+                    <p>Stark VPN • Updated: 12 Aug 2025</p>
+                </div>
+                <a href="𝗩𝗢𝗗𝗔𝗖𝗢𝗠🤍𝗨𝗡𝗟𝗜𝗠𝗜𝗧𝗘𝗗🥤.stk" download class="download-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M5 20h14v-2H5v2zm7-18l-5.5 5.5h4v6h3v-6h4L12 2z"/>
+                    </svg>
+                </a>
+            </div>
+
+          <div class="config-item">
+                <div class="config-text">
+                    <h3>𝗩𝗢𝗗𝗔𝗖𝗢𝗠❤️𝗨𝗡𝗟𝗜𝗠𝗜𝗧𝗘𝗗🥤𝗪𝗘𝗟𝗖𝗢𝗠𝗘 𝗥𝗦𝗔</h3>
+                    <p>Ha Tunnel • Updated: 12 Aug 2025</p>
+                </div>
+                <a href="𝗩𝗢𝗗𝗔𝗖𝗢𝗠❤️𝗨𝗡𝗟𝗜𝗠𝗜𝗧𝗘𝗗🥤𝗪𝗘𝗟𝗖𝗢𝗠𝗘 𝗥𝗦𝗔 .hat" download class="download-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M5 20h14v-2H5v2zm7-18l-5.5 5.5h4v6h3v-6h4L12 2z"/>
+                    </svg>
+                </a>
+            </div>
+            
+            <!-- HTTP Custom Configs -->
+            <div class="config-item">
+                <div class="config-text">
+                    <h3>MTN SA 100MB DAILY</h3>
+                    <p>Size: 1.2KB • Updated: 12 June 2025</p>
+                </div>
+                <a href="༒︎𝚒𝚌𝚎 𝚋𝚕𝚞𝚎  𝙼𝚃𝙽 𝚂𝙰 100𝙼𝙱 𝙳𝙰𝙸𝙻𝚈.hc" download class="download-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M5 20h14v-2H5v2zm7-18l-5.5 5.5h4v6h3v-6h4L12 2z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="config-item">
+                <div class="config-text">
+                    <h3>Vodacom Unlimited Slow DNS</h3>
+                    <p>Size: 1.2KB • Updated: 12 June 2025</p>
+                </div>
+                <a href="🏴🤡Vodacom SA Unlimited slow🐌 DNS 30days plug🇿🇦 (1).hc" download class="download-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M5 20h14v-2H5v2zm7-18l-5.5 5.5h4v6h3v-6h4L12 2z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- HA Tunnel Configs -->
+            <div class="config-item">
+                <div class="config-text">
+                    <h3>MTN 1GB Monthly</h3>
+                    <p>Ha Tunnel • Updated: 10 June</p>
+                </div>
+                <a href="mtn-1gb-monthly.ha" download class="download-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M5 20h14v-2H5v2zm7-18l-5.5 5.5h4v6h3v-6h4L12 2z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- X Tunnel Configs -->
+            <div class="config-item">
+                <div class="config-text">
+                    <h3>Vodacom Unlimited XT</h3>
+                    <p>Size: 1.3KB • Updated: 11 June 2025</p>
+                </div>
+                <a href="vodacom-unlimited.xt" download class="download-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M5 20h14v-2H5v2zm7-18l-5.5 5.5h4v6h3v-6h4L12 2z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- AR Tunnel Configs -->
+            <div class="config-item">
+                <div class="config-text">
+                    <h3>MTN AR Tunnel Config</h3>
+                    <p>Size: 1.4KB • Updated: 9 June 2025</p>
+                </div>
+                <a href="mtn-ar-config.ar" download class="download-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M5 20h14v-2H5v2zm7-18l-5.5 5.5h4v6h3v-6h4L12 2z"/>
+                    </svg>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Related Posts -->
+    <section class="related-posts">
+        <h2 class="section-title">You May Also Like</h2>
+
+        <div class="related-grid">
+            <!-- Post 1 -->
+            <a class="p2" href="search.html">
+                <div class="related-card">
+                    <div class="related-img">
+                        <img src="https://images.unsplash.com/photo-1586769852836-bc069f19e1b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="search">
+                    </div>
+                    <div class="related-content">
+                        <h3>Advanced Config Search</h3>
+                        <p>Find and download working configuration files for multiple VPNs</p>
+                        <div class="related-meta">
+                            <span>Jun 10, 2025</span>
+                            <span>Downloads</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Post 2 -->
+            <a class="p2" href="hc.html">
+                <div class="related-card">
+                    <div class="related-img">
+                        <img src="https://images.unsplash.com/photo-1639754390580-2e7437267698?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="HTTP Custom">
+                    </div>
+                    <div class="related-content">
+                        <h3>HTTP Custom Guide</h3>
+                        <p>Master HTTP Custom with our comprehensive setup guide</p>
+                        <div class="related-meta">
+                            <span>Jun 8, 2025</span>
+                            <span>6 min read</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Post 3 -->
+            <a class="p2" href="opt1.html">
+                <div class="related-card">
+                    <div class="related-img">
+                        <img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="Mobile Data Optimization">
+                    </div>
+                    <div class="related-content">
+                        <h3>VPN Data Optimization</h3>
+                        <p>Reduce data usage while maintaining VPN security</p>
+                        <div class="related-meta">
+                            <span>Jun 5, 2025</span>
+                            <span>8 min read</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>About ConfigHub</h3>
+                <p>Your trusted resource for VPN configurations and network optimization since 2023.</p>
+                <p>We provide working configs for multiple VPN clients with regular updates.</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="index.html#blog"><i class="fas fa-chevron-right"></i> Blog</a></li>
+                    <li><a href="search.html"><i class="fas fa-chevron-right"></i> Configurations</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Free Net Resources</a></li>
+                    <li><a href="index.html#em"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Configurations</h3>
+                <ul>
+                    <li><a href="cha.html"><i class="fas fa-chevron-right"></i> HA Tunnel files</a></li>
+                    <li><a href="cx.html"><i class="fas fa-chevron-right"></i> X Tunnel files</a></li>
+                    <li><a href="car.html"><i class="fas fa-chevron-right"></i> AR Tunnel files</a></li>
+                    <li><a href="cjez.html"><i class="fas fa-chevron-right"></i> Jz Pro VPN files</a></li>
+                    <li><a href="chc.html"><i class="fas fa-chevron-right"></i> HTTP Custom files</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Newsletter</h3>
+                <p>Subscribe for the latest config updates:</p>
+                <div style="display: flex; margin: 1rem 0;">
+                    <input type="email" placeholder="Your email" style="flex-grow: 1; padding: 0.8rem; background: var(--card-bg); border: 1px solid var(--border-color); color: white; border-radius: 4px 0 0 4px;">
+                    <button style="background: var(--accent-blue); color: var(--dark-bg); border: none; padding: 0 1.2rem; border-radius: 0 4px 4px 0; cursor: pointer;"><i class="fas fa-paper-plane"></i></button>
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+<script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9476153,document.createElement('script'))</script>
+
+
+        <div class="copyright">
+            <p>&copy; 2025 ConfigHub. All rights reserved. | Designed for VPN enthusiasts</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('show');
+        });
+
+        // Search and Filter Functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('searchInput');
+            const filterDropdown = document.querySelector('.filter-dropdown');
+            const searchBtn = document.getElementById('searchBtn');
+            const configItems = document.querySelectorAll('.config-item');
+            const noResults = document.getElementById('noResults');
+            const configList = document.getElementById('configList');
+
+            let currentFilter = 'all';
+
+            // Toggle dropdown
+            filterDropdown.addEventListener('click', (e) => {
+                e.stopPropagation();
+                filterDropdown.classList.toggle('active');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', () => {
+                filterDropdown.classList.remove('active');
+            });
+
+            // Select filter option
+            document.querySelectorAll('.dropdown-content div').forEach(option => {
+                option.addEventListener('click', (e) => {
+                    currentFilter = option.getAttribute('data-filter');
+                    const filterText = option.querySelector('i').nextSibling.textContent.trim();
+                    document.querySelector('.filter-btn span').textContent = filterText;
+                    filterDropdown.classList.remove('active');
+                    filterConfigs();
+                });
+            });
+
+            function filterConfigs() {
+                const searchTerm = searchInput.value.trim().toLowerCase();
+                let visibleItems = 0;
+
+                configItems.forEach(item => {
+                    const title = item.querySelector('h3').textContent.toLowerCase();
+                    const details = item.querySelector('p').textContent.toLowerCase();
+                    const link = item.querySelector('a').getAttribute('href').toLowerCase();
+
+                    // Check search term match
+                    const matchesSearch = searchTerm === '' ||
+                                        title.includes(searchTerm) ||
+                                        details.includes(searchTerm);
+
+                    // Check file type match
+                    const matchesType = currentFilter === 'all' || 
+                                        (currentFilter === '.hc' && link.endsWith('.hc')) ||
+                                        (currentFilter === '.ha' && link.endsWith('.ha')) ||
+                                        (currentFilter === '.xt' && link.endsWith('.xt')) ||
+                                        (currentFilter === '.ar' && link.endsWith('.ar'));
+
+                    if (matchesSearch && matchesType) {
+                        item.classList.remove('hidden');
+                        visibleItems++;
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+
+                // Show/hide no results message
+                noResults.style.display = visibleItems === 0 ? 'block' : 'none';
+                configList.style.display = visibleItems === 0 ? 'none' : 'block';
+            }
+
+            // Add event listeners
+            searchInput.addEventListener('input', filterConfigs);
+            searchBtn.addEventListener('click', filterConfigs);
+
+            // Allow search on Enter key
+            searchInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    filterConfigs();
+                }
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add animation to config items on scroll
+        const configItems = document.querySelectorAll('.config-item');
+
+        function animateOnScroll() {
+            configItems.forEach((box, index) => {
+                const boxPosition = box.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+
+                if(boxPosition < screenPosition) {
+                    setTimeout(() => {
+                        box.style.opacity = "1";
+                        box.style.transform = "translateX(0)";
+                    }, 150 * index);
+                }
+            });
+        }
+
+        // Set initial state
+        configItems.forEach(box => {
+            box.style.opacity = "0";
+            box.style.transform = "translateX(-20px)";
+            box.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+        });
+
+        // Listen for scroll events
+        window.addEventListener('scroll', animateOnScroll);
+        // Initial check in case boxes are already in view
+        animateOnScroll();
+    </script>
+</body>
+</html>
