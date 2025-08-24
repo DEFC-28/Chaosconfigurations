@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChaosConfigs - Advanced Cybersecurity Solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --secondary: #0ea5e9;
+            --accent: #8b5cf6;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #cbd5e1;
+            --text: #f8fafc;
+            --gray: #94a3b8;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--darker);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darker);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        #loader-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .loading-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .loading-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+          
+            
+        }
+    
+      .loading-logo .ch{
+        color: red;
+    }
+
+        .loading-bar-container {
+            width: 300px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0 auto 1.5rem;
+        }
+
+        .loading-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .loading-text {
+            font-size: 1.1rem;
+            color: var(--cray);
+            letter-spacing: 1px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(37, 99, 235, 0.2);
+            transition: var(--transition);
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+
+        .navbar.scrolled {
+            background: rgba(15, 23, 42, 0.95);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-icon {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(rgba(2, 6, 23, 0.9), rgba(2, 6, 23, 0.7)), url('https://images.unsplash.com/photo-1563014959-7aaa83350992?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--text), var(--light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: var(--text);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--light);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(203, 213, 225, 0.1);
+            transform: translateY(-5px);
+        }
+
+        /* Cybersecurity Section */
+        .cybersecurity {
+            padding: 8rem 5%;
+            background: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--secondary), var(--light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .skill-card {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 15px;
+            padding: 2.5rem;
+            transition: var(--transition);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(14, 165, 233, 0.1));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary);
+        }
+
+        .skill-card:hover::before {
+            opacity: 1;
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .skill-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .vpn-list {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .vpn-list li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .vpn-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+        }
+
+        /* Consultation Section */
+        .consultation {
+            padding: 8rem 5%;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(rgba(2, 6, 23, 0.9), rgba(2, 6, 23, 0.7)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+        }
+
+        .consultation-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .consultation-image {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        .consultation-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .consultation-text {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+
+        .consultation-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--text), var(--light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(2, 6, 23, 0.95);
+            padding: 5rem 5% 2rem;
+            border-top: 1px solid rgba(37, 99, 235, 0.2);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--light);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(37, 99, 235, 0.1);
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100%;
+            background: var(--dark);
+            z-index: 100;
+            transition: var(--transition);
+            padding: 5rem 2rem;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .mobile-nav-link {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+
+        .mobile-nav-link:hover {
+            color: var(--secondary);
+            padding-left: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .consultation-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .consultation-image {
+                max-width: 500px;
+                margin: 0 auto 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.3rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .hero {
+                padding-top: 80px;
+            }
+            
+            .navbar {
+                padding: 1rem 5%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .hero-description {
+                font-size: 1rem;
+            }
+            
+            .loading-logo {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    
+    
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <canvas id="loader-canvas"></canvas>
+        <div class="loading-content">
+            <div class="loading-logo"> <i class="fas fa-shield-alt logo-icon" id="log"></i>
+            CONFIG<span>HUB</span></div>
+            <div class="loading-bar-container">
+                <div class="loading-bar" id="progress"></div>
+            </div>
+            <div class="loading-text">SECURING YOUR CONNECTION</div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <a href="#" class="logo">
+            <i class="fas fa-shield-alt logo-icon"></i>
+            CHAOS<span class="ch">CONFIGS</span>
+        </a>
+        <div class="nav-links">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Services</a>
+            <a href="#" class="nav-link">Solutions</a>
+            <a href="#" class="nav-link">VPN Configs</a>
+            <a href="#" class="nav-link">Contact</a>
+        </div>
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-nav-links">
+            <a href="#" class="mobile-nav-link">Home</a>
+            <a href="#" class="mobile-nav-link">Services</a>
+            <a href="#" class="mobile-nav-link">Solutions</a>
+            <a href="#" class="mobile-nav-link">VPN Configs</a>
+            <a href="#" class="mobile-nav-link">Contact</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-subtitle">ADVANCED CYBERSECURITY SOLUTIONS</div>
+            <h1 class="hero-title">SECURE YOUR DIGITAL FRONTIER</h1>
+            <p class="hero-description">ChaosConfigs provides cutting-edge cybersecurity solutions and VPN configurations to protect your digital assets from evolving threats in today's complex cyber landscape.</p>
+            <div class="hero-buttons">
+                <a href="dashboard.html" class="btn btn-primary">Get conected</a>
+                <a href="#" class="btn btn-secondary">Explore Solutions</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cybersecurity Section -->
+    <section class="cybersecurity">
+        <div class="section-header">
+            <h2 class="section-title">OUR CYBERSECURITY EXPERTISE</h2>
+            <p class="section-subtitle">Specialized solutions to safeguard your digital infrastructure from emerging threats</p>
+        </div>
+        
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="skill-title">Threat Protection</h3>
+                <p class="skill-description">Advanced threat detection and prevention systems to safeguard your network from malicious activities.</p>
+                <ul class="vpn-list">
+                    <li>Real-time intrusion detection</li>
+                    <li>Malware & ransomware protection</li>
+                    <li>Advanced firewall configurations</li>
+                </ul>
+            </div>
+            
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-user-lock"></i>
+                </div>
+                <h3 class="skill-title">VPN Configurations</h3>
+                <p class="skill-description">Expert VPN setup and configuration for all major platforms and use cases.</p>
+                <ul class="vpn-list">
+                    <li>OpenVPN configurations</li>
+                    <li>WireGuard implementation</li>
+                    <li>IPSec/L2TP setups</li>
+                    <li>Site-to-site VPN tunnels</li>
+                    <li>Custom VPN solutions</li>
+                </ul>
+            </div>
+            
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3 class="skill-title">Data Encryption</h3>
+                <p class="skill-description">Military-grade encryption solutions to protect your sensitive data at rest and in transit.</p>
+                <ul class="vpn-list">
+                    <li>AES-256 encryption</li>
+                    <li>End-to-end data protection</li>
+                    <li>Secure key management</li>
+                    <li>Compliance-ready solutions</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Consultation Section -->
+    <section class="consultation">
+        <div class="consultation-content">
+            <div class="consultation-image">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Cybersecurity Consultation">
+            </div>
+            <div class="consultation-text">
+                <h2 class="consultation-title">CYBERSECURITY CONSULTATION</h2>
+                <p class="hero-description">Our team of cybersecurity experts provides personalized consultation services to identify vulnerabilities and implement robust security measures tailored to your organization's needs.</p>
+                <ul class="vpn-list">
+                    <li>Comprehensive security audits</li>
+                    <li>Risk assessment and mitigation</li>
+                    <li>Incident response planning</li>
+                    <li>Security policy development</li>
+                    <li>Ongoing monitoring and support</li>
+                </ul>
+                <div class="hero-buttons" style="margin-top: 2rem;">
+                    <a href="index.html" class="btn btn-primary">Request Consultation</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>CHAOSCONFIGS</h3>
+                <p>Advanced cybersecurity solutions and VPN configurations for the modern digital landscape.</p>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Threat Protection</a></li>
+                    <li><a href="#">VPN Configurations</a></li>
+                    <li><a href="#">Network Security</a></li>
+                    <li><a href="#">Data Encryption</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>VPN Solutions</h3>
+                <ul class="footer-links">
+                    <li><a href="#">OpenVPN Setup</a></li>
+                    <li><a href="#">WireGuard Implementation</a></li>
+                    <li><a href="#">IPSec Configurations</a></li>
+                    <li><a href="#">Custom VPN Solutions</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-envelope"></i> contact@chaosconfigs.com</a></li>
+                    <li><a href="#"><i class="fas fa-phone"></i> +1 (555) 123-4567</a></li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Cyber Security Hub, NY</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 ChaosConfigs. All rights reserved. Secure your digital frontier.
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Three.js for 3D loader
+        function initLoader() {
+            const canvas = document.getElementById('loader-canvas');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            
+            // Create a torus knot geometry
+            const geometry = new THREE.TorusKnotGeometry(1, 0.4, 128, 32);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: 0x2563eb,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const knot = new THREE.Mesh(geometry, material);
+            scene.add(knot);
+            
+            // Add ambient light
+            const ambientLight = new THREE.AmbientLight(0x0ea5e9, 0.5);
+            scene.add(ambientLight);
+            
+            // Position camera
+            camera.position.z = 5;
+            
+            // Animation function
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                knot.rotation.x += 0.01;
+                knot.rotation.y += 0.01;
+                
+                renderer.render(scene, camera);
+            }
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+            
+            animate();
+        }
+        
+        // Preloader animation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize 3D loader
+            initLoader();
+            
+            const preloader = document.getElementById('preloader');
+            const progressBar = document.getElementById('progress');
+            
+            // Simulate loading progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    
+                    // Animate preloader out
+                    gsap.to(preloader, {
+                        opacity: 0,
+                        duration: 0.8,
+                        ease: "power2.inOut",
+                        onComplete: () => {
+                            preloader.style.display = 'none';
+                            
+                            // Initialize animations
+                            initAnimations();
+                        }
+                    });
+                }
+                progressBar.style.width = progress + '%';
+            }, 200);
+        });
+        
+        // Initialize animations
+        function initAnimations() {
+            // Animate navbar in
+            gsap.to('#navbar', {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                ease: "power3.out"
+            });
+            
+            // Animate hero content
+            gsap.to('.hero-content', {
+                opacity: 1,
+                y: 0,
+                duration: 1.2,
+                ease: "power3.out"
+            });
+            
+            // Scroll trigger for navbar
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    document.getElementById('navbar').classList.add('scrolled');
+                } else {
+                    document.getElementById('navbar').classList.remove('scrolled');
+                }
+            });
+            
+            // Mobile menu toggle
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                mobileMenuBtn.innerHTML = mobileMenu.classList.contains('active') ? 
+                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Initialize ScrollTrigger
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Animate skill cards
+            gsap.utils.toArray('.skill-card').forEach(card => {
+                gsap.to(card, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 80%'
+                    }
+                });
+            });
+            
+            // Animate consultation section
+            gsap.to('.consultation-image', {
+                opacity: 1,
+                x: 0,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: '.consultation-content',
+                    start: 'top 80%'
+                }
+            });
+            
+            gsap.to('.consultation-text', {
+                opacity: 1,
+                x: 0,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: '.consultation-content',
+                    start: 'top 80%'
+                }
+            });
+            
+            // Add hover animations to cards
+            document.querySelectorAll('.skill-card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    gsap.to(card, {
+                        scale: 1.03,
+                        duration: 0.3,
+                        ease: "power1.out"
+                    });
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, {
+                        scale: 1,
+                        duration: 0.3,
+                        ease: "power1.out"
+                    });
+                });
+            });
+        }
+    </script>
+</body>
+</html>
