@@ -592,7 +592,135 @@
                 font-size: 1.8rem;
             }
         }
-    
+       /* Enhanced mobile-specific styles */
+    @media (max-width: 480px) {
+        .hero-title {
+            font-size: 2rem;
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+        
+        .hero-description {
+            font-size: 1rem;
+        }
+        
+        .loading-logo {
+            font-size: 2.5rem;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+        }
+        
+        .skill-card {
+            padding: 1.5rem;
+        }
+        
+        .skill-icon {
+            font-size: 2.5rem;
+        }
+        
+        .consultation-title {
+            font-size: 1.8rem;
+        }
+        
+        .footer {
+            padding: 3rem 5% 2rem;
+        }
+        
+        .footer-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+    }
+
+    /* Specific adjustments for very small devices (under 360px) */
+    @media (max-width: 360px) {
+        .hero-title {
+            font-size: 1.8rem;
+        }
+        
+        .loading-logo {
+            font-size: 2rem;
+        }
+        
+        .loading-bar-container {
+            width: 250px;
+        }
+        
+        .btn {
+            padding: 0.8rem 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .skill-title {
+            font-size: 1.3rem;
+        }
+        
+        .vpn-list li {
+            font-size: 0.9rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+        }
+    }
+
+    /* Fix for specific device heights */
+    @media (max-height: 700px) and (max-width: 480px) {
+        .hero {
+            min-height: 600px;
+            padding-top: 70px;
+        }
+        
+        .hero-content {
+            padding: 2rem 0;
+        }
+    }
+
+    /* Orientation-specific adjustments */
+    @media (max-width: 932px) and (orientation: landscape) {
+        .hero {
+            min-height: 500px;
+            padding-top: 80px;
+        }
+        
+        .hero-title {
+            font-size: 2rem;
+        }
+        
+        .hero-description {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+    }
+
+    /* Samsung Fold and similar narrow devices */
+    @media (max-width: 280px) {
+        .logo {
+            font-size: 1.5rem;
+        }
+        
+        .hero-title {
+            font-size: 1.5rem;
+        }
+        
+        .loading-logo {
+            font-size: 1.8rem;
+        }
+        
+        .loading-bar-container {
+            width: 200px;
+        }
+        
+        .mobile-menu {
+            width: 220px;
+        }
+    }
     
     </style>
 </head>
