@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HA Tunnel Plus - APK Downloader</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+
+        :root {
+            --primary: #2ECC71;
+            --primary-dark: #27ae60;
+            --surface: #FFFFFF;
+            --background: #F8F9FA;
+            --on-surface: #212121;
+            --on-surface-variant: #666666;
+            --outline: #DDDDDD;
+            --rating: #FFC107;
+            --safe: #4CAF50;
+            --warning: #FF9800;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            --accent-teal: #00f3ff;
+            --text-light: #e0e6f0;
+        }
+       
+        body {
+            background-color: white;
+            color: var(--on-surface);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .app-header {
+            background-color: var(--surface);
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--on-surface);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        .logo i {
+            font-size: 24px;
+        }
+
+        /* App Hero Section */
+        .app-hero {
+            background-color: var(--surface);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+           
+        }
+
+        @media (min-width: 768px) {
+            .app-hero {
+                flex-direction: row;
+                text-align: left;
+                align-items: flex-start;
+            }
+        }
+
+        .app-icon-large {
+            width: 120px;
+            height: 120px;
+            border-radius: 24px;
+            background-size: 100%;
+            background-repeat: non;
+            background-image: url('download.jpeg');  
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 768px) {
+            .app-icon-large {
+                margin-right: 24px;
+                margin-bottom: 0;
+            }
+        }
+
+        .app-info {
+            flex: 1;
+        }
+
+        .app-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .app-developer {
+            color: var(--on-surface-variant);
+            margin-bottom: 16px;
+            font-size: 18px;
+        }
+
+        .app-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--on-surface-variant);
+        }
+
+        .rating {
+            color: var(--rating);
+            font-weight: 600;
+        }
+
+        .app-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .primary-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 28px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .primary-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .secondary-btn {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 14px 28px;
+            border-radius: 28px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .secondary-btn:hover {
+            background-color: rgba(46, 204, 113, 0.1);
+        }
+
+        /* Screenshots Section */
+        .screenshots-section {
+            background-color: var(--surface);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .screenshots-container {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding: 8px 0;
+        }
+
+        .screenshot {
+            width: 200px;
+            height: 100%;
+            border-radius: 12px;
+            background-color: var(--background);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--on-surface-variant);
+            flex-shrink: 0;
+            font-size: 14px;
+            overflow: hidden;
+        }
+    
+       .screenshot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+      }
+
+        /* Description Section */
+        .description-section {
+            background-color: var(--surface);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .description-text {
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .changelog {
+            background-color: var(--background);
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 16px;
+        }
+
+        .changelog-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .changelog-list {
+            list-style-type: none;
+        }
+
+        .changelog-list li {
+            margin-bottom: 6px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .changelog-list li:before {
+            content: "•";
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+        }
+
+        /* Safety Section */
+        .safety-section {
+            background-color: var(--surface);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .safe-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--safe);
+            padding: 12px 20px;
+            border-radius: 24px;
+            font-weight: 600;
+            margin: 16px 0;
+        }
+
+        /* Permissions Section */
+        .permissions-section {
+            background-color: var(--surface);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .permissions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .permission {
+            background-color: var(--background);
+            padding: 12px 16px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .permission i {
+            color: var(--on-surface-variant);
+            font-size: 18px;
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            background-color: var(--surface);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .review {
+            background-color: var(--background);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .reviewer {
+            font-weight: 600;
+        }
+
+        .review-rating {
+            color: var(--rating);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .review-content {
+            color: var(--on-surface-variant);
+        }
+
+        /* More Apps Section */
+        .more-apps-section {
+            background-color: var(--surface);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .app-card {
+            background-color: var(--background);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .app-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .app-card-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #6c5ce7, var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            margin: 0 auto 12px;
+        }
+
+        .app-card-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .app-card-rating {
+            color: var(--rating);
+            font-size: 14px;
+        }
+    
+        /* Download Section */
+        .download-section {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 5%;
+            text-align: center;
+        }
+
+        .download-card {
+            background: var(--surface);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--outline);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .file-size {
+            color: var(--primary);
+            font-size: 18px;
+            margin: 20px 0;
+            display: block;
+        }
+
+        .download-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px 45px;
+            border-radius: 30px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+            box-shadow: 0 5px 20px rgba(46, 204, 113, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(46, 204, 113, 0.5);
+        }
+
+        .config-link {
+            margin-top: 30px;
+            display: inline-block;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .config-link:hover {
+            color: var(--primary-dark);
+            transform: translateX(5px);
+        }
+
+        .hlink {
+            text-decoration: none;
+        }
+        
+        /* Fake screenshot styling */
+        .screenshot-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #6c5ce7, #00cec9);
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .screenshot-placeholder i {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+ 
+
+        <!-- App Hero Section -->
+        <section class="app-hero">
+            <div class="app-icon-large">
+              
+            </div>
+            <div class="app-info">
+                <h1 class="app-title">HA Tunnel Plus</h1>
+                <p class="app-developer">Art of tunnel</p>
+                <div class="app-meta">
+                    <div class="meta-item rating">
+                        <i class="fas fa-star"></i>
+                        <span>4.8</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-download"></i>
+                        <span>5M+ Downloads</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-database"></i>
+                        <span>12.5 MB</span>
+                    </div>
+                </div>
+                <p>Version 1.5.6 • Updated Jul 29, 2025</p>
+                <div class="app-actions">
+                    <a class="hlink" href="#down">
+                    <button class="primary-btn">
+                        <i class="fas fa-download"></i>
+                        Download APK
+                    </button>
+                    </a>
+                    <button class="secondary-btn">
+                        <i class="fas fa-list"></i>
+                        Other Versions
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Screenshots Section -->
+        <section class="screenshots-section">
+            <h2 class="section-title">
+                <i class="fas fa-images"></i>
+                Screenshots
+            </h2>
+            <div class="screenshots-container">
+                <div class="screenshot">
+                       <img src="scren-0 (6).webp" alt="1">
+                </div>
+                <div class="screenshot">
+                      <img src="sceen-1 (7).webp" alt="2">
+                </div>
+                <div class="screenshot">
+                      <img src="scren-2 (5).webp" alt="3">
+                </div>
+                <div class="screenshot">
+                      <img src="sceen-4 (3).webp" alt="4">
+                </div>
+                  </section>
+        <!-- Description Section -->
+        <section class="description-section">
+            <h2 class="section-title">
+                <i class="fas fa-file-alt"></i>
+                Description
+            </h2>
+            <p class="description-text">
+                HA Tunnel Plus is a powerful VPN application that provides secure and private internet access. 
+                With military-grade encryption, it protects your online activities from hackers and surveillance. 
+                The app offers high-speed connections to servers in 30+ countries, allowing you to bypass geo-restrictions 
+                and access content from anywhere in the world. Its user-friendly interface makes it easy to connect 
+                with just one tap.
+            </p>
+            
+            <div class="changelog">
+                <h3 class="changelog-title">
+                    <i class="fas fa-clipboard-list"></i>
+                    What's New in Version 2.3.4
+                </h3>
+                <ul class="changelog-list">
+                    <li>Added 5 new server locations including Singapore and Germany</li>
+                    <li>Improved connection stability and speed by 25%</li>
+                    <li>Fixed bugs related to automatic reconnection</li>
+                    <li>Enhanced security protocols for better protection</li>
+                    <li>Reduced battery consumption during extended use</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Safety Section -->
+        <section class="safety-section">
+            <h2 class="section-title">
+                <i class="fas fa-shield-alt"></i>
+                Safety & Security
+            </h2>
+            <div class="safe-badge">
+                <i class="fas fa-check-circle"></i>
+                <span>Strict no-logs policy verified by independent audit</span>
+            </div>
+            <p>HA Tunnel Plus follows a strict no-logs policy, meaning we don't track or store your online activities. 
+               This APK file has been thoroughly scanned by our security system and is guaranteed to be free of malware, 
+               viruses, and other security threats. All data is encrypted using AES-256 encryption.</p>
+        </section>
+
+        <!-- Permissions Section -->
+        <section class="permissions-section">
+            <h2 class="section-title">
+                <i class="fas fa-key"></i>
+                App Permissions
+            </h2>
+            <p>This app requires the following permissions to function properly:</p>
+            <div class="permissions-grid">
+                <div class="permission">
+                    <i class="fas fa-network-wired"></i>
+                    <span>Network access</span>
+                </div>
+                <div class="permission">
+                    <i class="fas fa-wifi"></i>
+                    <span>Wi-Fi connection</span>
+                </div>
+                <div class="permission">
+                    <i class="fas fa-bluetooth"></i>
+                    <span>Bluetooth (for certain devices)</span>
+                </div>
+                <div class="permission">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                </div>
+                <div class="permission">
+                    <i class="fas fa-sync-alt"></i>
+                    <span>Run at startup</span>
+                </div>
+                <div class="permission">
+                    <i class="fas fa-battery-full"></i>
+                    <span>Prevent device from sleeping</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews Section -->
+        <section class="reviews-section">
+            <h2 class="section-title">
+                <i class="fas fa-star"></i>
+                User Reviews
+            </h2>
+            <div class="review">
+                <div class="review-header">
+                    <span class="reviewer">Robert M.</span>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <span>4.5</span>
+                    </div>
+                </div>
+                <p class="review-content">Excellent VPN service! Fast connection speeds and reliable access to geo-restricted content. The interface is clean and easy to use.</p>
+            </div>
+            <div class="review">
+                <div class="review-header">
+                    <span class="reviewer">Sophia K.</span>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <span>5.0</span>
+                    </div>
+                </div>
+                <p class="review-content">I've tried many VPNs, but HA Tunnel Plus is by far the most reliable. It never disconnects unexpectedly and the speeds are consistently good.</p>
+            </div>
+            <div class="review">
+                <div class="review-header">
+                    <span class="reviewer">Daniel P.</span>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <span>4.0</span>
+                    </div>
+                </div>
+                <p class="review-content">Good free VPN option with decent speeds. Occasionally disconnects but reconnects automatically. The premium version is worth it for frequent users.</p>
+            </div>
+        </section>
+
+        <!-- Download Section -->
+        <section class="download-section" id="down">
+            <div class="download-card">
+                <h2 class="section-title">Download Now</h2>
+                <span class="file-size">40 MB APK File</span>
+                <a href="https://d.apkpure.com/b/APK/com.hatunnel.plus?version=latest">
+                <button class="download-btn">
+                    <i class="fas fa-download"></i>
+                    Download APK
+                </button>
+                </a>
+                <p><i class="fas fa-shield-alt"></i> Verified safe and free from malware</p>
+                
+                <a href="configurations.html" class="config-link">
+                    <i class="fas fa-file-download"></i>
+                    VPN Configuration Files
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Simple interactivity for the download button
+        document.querySelector('.download-btn').addEventListener('click', function() {
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Downloading...';
+            this.disabled = true;
+            
+            // Simulate download completion after 3 seconds
+            setTimeout(() => {
+                this.innerHTML = '<i class="fas fa-check"></i> Downloaded';
+                this.style.backgroundColor = '#4CAF50';
+            }, 3000);
+        });
+        
+        // Back button functionality
+        document.querySelector('.back-button').addEventListener('click', function() {
+            alert('Going back to previous page');
+        });
+        
+        // Other versions button
+        document.querySelector('.secondary-btn').addEventListener('click', function() {
+            alert('Showing other versions of HA Tunnel Plus');
+        });
+    </script>
+     <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9476153,document.createElement('script'))</script>
+
+    
+</body>
+</html>
